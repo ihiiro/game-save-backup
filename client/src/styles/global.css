@@ -2,4 +2,9 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  background-color: #4c516d;
+}
+
+div.AO::-webkit-scrollbar {
+  display: none;
 }

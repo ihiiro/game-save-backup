@@ -6,7 +6,7 @@ import down_arrow from '../assets/down_arrow.png'
 function App() {
   const [ slot_active, set_slot_active ] = useState({})
 
-  const slots = [0, 1]
+  const slots = [0]
 
 
   function toggle_slot(slot) { 
@@ -16,11 +16,13 @@ function App() {
   }
 
   return (
+    <>
     <div className='AO' >
 
 
       { slots.map( ( slot ) => (
-        <div className={`slot ${slot_active[slot] ? 'slot-active' : ''}`} onClick={ () => toggle_slot(slot) }>
+      <div className={`slot ${slot_active[slot] ? 'slot-active' : ''}`} onClick={ () => toggle_slot(slot) }>
+        <label style={{color: '#009900'}}>Slot {slot}</label>
         <label>Watch this location for changes</label>
         <input></input> {/* directory to watch */}
         <img src={down_arrow} alt='down_arrow'></img>
@@ -31,6 +33,14 @@ function App() {
 
 
     </div>
+
+    <div className='buttons'>
+      <button style={{backgroundColor: '#66b032'}}>Save all</button>
+      <button style={{backgroundColor: '#00bfff'}}>Add slot</button>
+      <button style={{backgroundColor: '#cc0000'}}>Remove slot</button>
+    </div>
+
+    </>
   )
 }
 
