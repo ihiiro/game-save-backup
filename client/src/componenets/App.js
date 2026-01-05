@@ -7,11 +7,10 @@ function App() {
   const [ slot_active, set_slot_active ] = useState({})
   const [ slots, set_slots ] = useState({})
   const [ crosshair, set_crosshair ] = useState(-1)
-  // for new slots, the correct latest ids should be calculated
   const [ new_slot_id, set_new_slot_id ] = useState(0)
 
   useEffect(() => {
-    fetch('/api/slots').then(response => {
+    fetch('/get-slots').then(response => {
       if (response.ok) {
         response.json().then(slots => {
           set_slots(slots)
@@ -28,7 +27,7 @@ function App() {
     set_slot_active({
       [slot]: !slot_active[slot]
     })
-    set_crosshair(slot)
+    set_crosshair((crosshair === slot) ? -1 : slot)
   }
 
   function modify_watch_context(target, key) {
@@ -66,6 +65,16 @@ function App() {
     set_new_slot_id(Object.keys(slots).length + 1)
   }
 
+  function save_all() {
+    fetch('/post-slots',
+      {
+        method: 'POST',
+        body: JSON.stringify(slots),
+        headers: { 'content-type': 'application/json' }
+      }
+    )
+  }
+
   return (
     <>
     <div className='AO' >
@@ -85,7 +94,7 @@ function App() {
     </div>
 
     <div className='buttons'>
-      <button style={{backgroundColor: '#66b032'}}>Save all</button>
+      <button style={{backgroundColor: '#66b032'}} onClick={save_all}>Save all</button>
       <button style={{backgroundColor: '#00bfff'}} onClick={add_slot} >Add slot</button>
       <button style={{backgroundColor: '#cc0000'}} onClick={remove_slot}>Remove slot</button>
     </div>
